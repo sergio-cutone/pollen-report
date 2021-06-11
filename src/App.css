@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&family=PT+Sans:wght@400;700&display=swap');
+
+body {
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+h1,
+h2 {
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bold;
+}
+p {
+  margin-bottom: 15px;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
