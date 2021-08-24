@@ -6,7 +6,6 @@ import Footer from './Footer';
 const App = () => {
   const [airquality, setAirquality] = useState(false);
   const [city, setCity] = useState('Mississauga');
-  const [isLoaded, setIsLoaded] = useState(false);
   const fetchPollen = useCallback(async () => {
     const http = require('https');
     const options = {
@@ -26,8 +25,8 @@ const App = () => {
       });
       res.on('end', function () {
         const body = Buffer.concat(chunks);
+        console.log(JSON.parse(body.toString()).data[0]);
         setAirquality(JSON.parse(body.toString()).data[0]);
-        setIsLoaded(true);
       });
     });
     req.end();
@@ -38,7 +37,6 @@ const App = () => {
   }, [fetchPollen, city]);
 
   const handleCity = value => {
-    setIsLoaded(false);
     setCity(value);
   };
 
@@ -51,12 +49,8 @@ const App = () => {
       'Oakville',
       'Niagara Falls Canada',
     ];
-    const cityOptions = cities.map((city, index) => {
-      return (
-        <option value={city} key={`city=${index}`}>
-          {city}
-        </option>
-      );
+    const cityOptions = cities.map(city => {
+      return <option value={city}>{city}</option>;
     });
     return (
       <select
@@ -95,7 +89,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header city={city} isLoaded={isLoaded} />
+      <Header city={city} />
       <main className="max-w-screen-md p-3 mx-auto">
         <p>{cityDD()}</p>
         {airquality ? (
@@ -124,11 +118,11 @@ const App = () => {
             <div className="grid grid-cols-2 gap-3 text-xs sm:text-base border-2 border-gray-400 rounded-xl p-3 shadow-lg">
               {Object.keys(airquality.Species).map((species, index) => {
                 return (
-                  <div key={`species-${index}`}>
+                  <div>
                     <h2 className="text-base sm:text-lg mb-1">{species}</h2>
                     {Object.keys(airquality.Species[species]).map(
                       (key, index) => (
-                        <div key={`species-single-${index}`}>
+                        <div>
                           {key}: {airquality.Species[species][key]}
                         </div>
                       ),
